@@ -4,46 +4,117 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import TravelPackages from "@/components/TravelPackages";
+import { Loader2 } from "lucide-react";
 
 const Dashboard = () => {
-  const { user, session, loading } = useAuth();
+  const { user, session, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
+  const fetchUserPackages = async () => {
+    if (!user) return [];
+    const { data, error } = await supabase
+      .from("user_packages")
+      .select("package_name, created_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  };
+
+  const {
+    data: packages,
+    isLoading: packagesLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["userPackages", user?.id],
+    queryFn: fetchUserPackages,
+    enabled: !!user,
+  });
+
   useEffect(() => {
-    if (!loading && !session) {
+    if (!authLoading && !session) {
       navigate("/login");
     }
-  }, [session, loading, navigate]);
+  }, [session, authLoading, navigate]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate("/");
   };
 
-  if (loading) {
-    return <div className="flex min-h-screen items-center justify-center bg-background">Loading...</div>;
-  }
-
-  if (!user) {
-    return null;
+  if (authLoading || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-4 md:p-8">
-      <div className="container mx-auto">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="container mx-auto p-4 md:p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button onClick={handleSignOut} variant="outline">Sign Out</Button>
+          <Button onClick={handleSignOut} variant="outline">
+            Sign Out
+          </Button>
         </div>
-        
-        <Card className="bg-card/50">
+
+        <Card className="bg-card/50 mb-8">
           <CardHeader>
             <CardTitle>Welcome, {user.email}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">This is your personal dashboard. Here you will find your purchased travel packages and account details once the feature is available.</p>
+            <p className="text-muted-foreground">Manage your travel packages and account details here.</p>
           </CardContent>
         </Card>
+
+        {packagesLoading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : isError ? (
+          <p className="text-destructive text-center">Failed to load your packages. Please try again later.</p>
+        ) : packages && packages.length > 0 ? (
+          <Card className="bg-card/50">
+            <CardHeader>
+              <CardTitle>Your Purchased Packages</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-4">
+                {packages.map((pkg, index) => (
+                  <li
+                    key={index}
+                    className="p-4 border border-border rounded-lg flex justify-between items-center"
+                  >
+                    <div>
+                      <p className="font-semibold text-lg">{pkg.package_name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Purchased on: {new Date(pkg.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <Button variant="outline" disabled>View Details</Button>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ) : (
+          <div>
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-semibold">You haven't purchased any packages yet.</h2>
+              <p className="text-muted-foreground">
+                Explore our exclusive packages below and start your AFCON 2025 adventure!
+              </p>
+            </div>
+            <TravelPackages />
+          </div>
+        )}
       </div>
     </div>
   );

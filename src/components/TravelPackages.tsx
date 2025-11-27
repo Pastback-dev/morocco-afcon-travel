@@ -4,6 +4,8 @@ import { Check, Star, Sparkles, Trophy, Crown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const packages = [
   {
@@ -87,15 +89,36 @@ const TravelPackages = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
-  const handleBookNow = (packageName: string) => {
+  const handleBookNow = async (packageName: string) => {
     if (!user) {
       navigate("/login");
-    } else {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("user_packages")
+        .insert({ user_id: user.id, package_name: packageName });
+
+      if (error) {
+        throw error;
+      }
+
       toast({
-        title: "Booking feature coming soon!",
-        description: `You'll soon be able to book the ${packageName} package.`,
+        title: "Package Booked!",
+        description: `You have successfully booked the ${packageName} package.`,
       });
+
+      queryClient.invalidateQueries({ queryKey: ["userPackages", user.id] });
+    } catch (error) {
+      toast({
+        title: "Booking Failed",
+        description: "There was an error booking your package. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Booking error:", error);
     }
   };
 
