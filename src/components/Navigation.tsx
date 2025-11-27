@@ -1,29 +1,48 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X, Plane } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, loading } = useAuth();
 
   const menuItems = [
-    { label: "Home", href: "#home" },
-    { label: "Packages", href: "#packages" },
-    { label: "Schedule", href: "#schedule" },
-    { label: "Destinations", href: "#destinations" },
-    { label: "Tours", href: "#tours" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", href: "/#home" },
+    { label: "Packages", href: "/#packages" },
+    { label: "Schedule", href: "/#schedule" },
+    { label: "Destinations", href: "/#destinations" },
+    { label: "Tours", href: "/#tours" },
+    { label: "Contact", href: "/#contact" },
   ];
+
+  const AuthButton = () => {
+    if (loading) return null;
+    if (user) {
+      return (
+        <Button asChild className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6">
+          <Link to="/dashboard">Dashboard</Link>
+        </Button>
+      );
+    }
+    return (
+      <Button asChild className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6">
+        <Link to="/login">Login</Link>
+      </Button>
+    );
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center">
               <Plane className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl font-bold">AFCON 2025</span>
-          </div>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
             {menuItems.map((item) => (
@@ -38,9 +57,7 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:block">
-            <Button className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6">
-              Book Now
-            </Button>
+            <AuthButton />
           </div>
 
           <button
@@ -64,9 +81,7 @@ const Navigation = () => {
                   {item.label}
                 </a>
               ))}
-              <Button className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full">
-                Book Now
-              </Button>
+              <AuthButton />
             </div>
           </div>
         )}

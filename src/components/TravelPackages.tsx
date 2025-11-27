@@ -1,6 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Sparkles, Trophy, Crown } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const packages = [
   {
@@ -81,6 +84,21 @@ const packages = [
 ];
 
 const TravelPackages = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleBookNow = (packageName: string) => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      toast({
+        title: "Booking feature coming soon!",
+        description: `You'll soon be able to book the ${packageName} package.`,
+      });
+    }
+  };
+
   return (
     <section className="py-24 px-4 bg-background relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -141,6 +159,7 @@ const TravelPackages = () => {
                 </ul>
 
                 <Button
+                  onClick={() => handleBookNow(pkg.title)}
                   className={`w-full bg-gradient-to-r ${pkg.gradient} hover:opacity-90 text-white rounded-full py-6 font-semibold transition-all hover:scale-105`}
                 >
                   Book Now
