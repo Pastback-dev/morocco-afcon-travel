@@ -91,10 +91,6 @@ const MatchSchedule = () => {
                     </div>
                   </div>
                 </div>
-
-                <Button className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6 whitespace-nowrap">
-                  Get Tickets
-                </Button>
               </div>
             </Card>
           ))}
