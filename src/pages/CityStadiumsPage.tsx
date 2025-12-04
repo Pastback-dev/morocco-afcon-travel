@@ -45,19 +45,19 @@ const citiesAndStadiums: CityData[] = [
   },
   {
     name: "Fes",
-    stadiums: [{ name: "Complexe Sportif de Fès", city: "Fes", description: "A significant stadium in the historic city of Fes.", imagePlaceholder: "bg-gradient-to-br from-royalBlue to-moroccanRed" }],
+    stadiums: [{ name: "Complexe Sportif de Fès", city: "Fes", description: "A significant stadium in the historic city of Fes.", imagePlaceholder: "bg-gradient-to-br from-royalBlue to-moroccanRed", imageUrl: "https://sport.le360.ma/resizer/v2/2NIUGCJUTBFZJEFRDYZRPNABVE.jpeg?auth=ceb103447291c6b1bca58fdad1c3ade6a3a01ca3c35376603de67cec5ce54eab&smart=true&width=1216&height=684" }],
     gradient: "from-royalBlue to-moroccanRed",
     icon: Globe,
   },
   {
     name: "Marrakech",
-    stadiums: [{ name: "Grand Stade de Marrakech", city: "Marrakech", description: "A grand stadium in the vibrant city of Marrakech.", imagePlaceholder: "bg-gradient-to-br from-accent to-primary" }],
+    stadiums: [{ name: "Grand Stade de Marrakech", city: "Marrakech", description: "A grand stadium in the vibrant city of Marrakech.", imagePlaceholder: "bg-gradient-to-br from-accent to-primary", imageUrl: "https://www.anep.ma/sites/default/files/styles/news/public/2023-09/STADE%20KECH%20.jpg?itok=vxs9GHu3" }],
     gradient: "from-accent to-primary",
     icon: Mountain,
   },
   {
     name: "Tangier",
-    stadiums: [{ name: "Grand Stade de Tanger", city: "Tangier", description: "A major stadium in Tangier, the gateway to Africa.", imagePlaceholder: "bg-gradient-to-br from-secondary to-gold" }],
+    stadiums: [{ name: "Grand Stade de Tanger", city: "Tangier", description: "A major stadium in Tangier, the gateway to Africa.", imagePlaceholder: "bg-gradient-to-br from-secondary to-gold", imageUrl: "https://sport.le360.ma/resizer/v2/Z2WTISO555GRTARZBJ2O3YR7LE.JPG?auth=0f582b6063f8b5ed4537897c89db9e813f1a3cbfed93e2224c109d59587d73d3&smart=true&width=1216&height=684" }],
     gradient: "from-secondary to-gold",
     icon: Ship,
   },
