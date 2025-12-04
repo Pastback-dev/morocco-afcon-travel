@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Building, Landmark, Globe, Mountain, Sun, Ship } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom"; // Import Link
 
 interface Stadium {
   name: string;
@@ -61,13 +62,14 @@ const citiesAndStadiums: CityData[] = [
 ];
 
 const StadiumSelection = () => {
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  // We no longer need selectedCity state here as navigation handles it
+  // const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
-  const handleCitySelect = (cityName: string) => {
-    setSelectedCity(cityName);
-  };
+  // const handleCitySelect = (cityName: string) => {
+  //   setSelectedCity(cityName);
+  // };
 
-  const currentCityData = citiesAndStadiums.find(city => city.name === selectedCity);
+  // const currentCityData = citiesAndStadiums.find(city => city.name === selectedCity);
 
   return (
     <Card className="bg-card/50">
@@ -80,48 +82,30 @@ const StadiumSelection = () => {
           {citiesAndStadiums.map((city) => {
             const CityIcon = city.icon;
             return (
-              <Button
+              <Link
                 key={city.name}
-                variant="outline"
-                onClick={() => handleCitySelect(city.name)}
+                to={`/stadiums/${city.name}`} // Navigate to the new page
                 className={cn(
                   "rounded-xl p-4 flex flex-col items-center justify-center h-28 w-full text-center transition-all group",
-                  selectedCity === city.name
-                    ? `bg-gradient-to-br ${city.gradient} text-primary-foreground shadow-glow border-primary`
-                    : `border-border hover:border-primary bg-card/30 hover:bg-card/50`
+                  `bg-gradient-to-br ${city.gradient} text-primary-foreground shadow-glow border-primary` // Always apply gradient for visual appeal
                 )}
               >
                 <CityIcon className={cn(
                   "h-8 w-8 mb-2 transition-transform group-hover:scale-110",
-                  selectedCity === city.name ? "text-white" : "text-primary group-hover:text-primary-foreground"
+                  "text-white" // Always white icon on gradient background
                 )} />
                 <span className={cn(
                   "font-semibold text-sm",
-                  selectedCity === city.name ? "text-white" : "text-foreground group-hover:text-primary-foreground"
+                  "text-white" // Always white text on gradient background
                 )}>
                   {city.name}
                 </span>
-              </Button>
+              </Link>
             );
           })}
         </div>
 
-        {selectedCity && currentCityData && (
-          <div className="mt-6 space-y-4 animate-fade-in">
-            <h3 className="text-xl font-semibold flex items-center gap-2">
-              <Building className="h-5 w-5 text-primary" />
-              Stadiums in {selectedCity}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {currentCityData.stadiums.map((stadium) => (
-                <Card key={stadium.name} className="p-4 bg-background/50 border border-border rounded-lg">
-                  <p className="font-medium text-lg">{stadium.name}</p>
-                  <p className="text-sm text-muted-foreground">{stadium.city}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Removed conditional rendering of stadiums as they are now on a separate page */}
       </CardContent>
     </Card>
   );
