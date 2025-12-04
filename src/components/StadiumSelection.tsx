@@ -91,11 +91,11 @@ const StadiumSelection = () => {
                 )}
               >
                 <CityIcon className={cn(
-                  "h-8 w-8 mb-2 transition-transform group-hover:scale-110",
+                  "h-12 w-12 mb-2 transition-transform group-hover:scale-110", // Increased icon size
                   "text-white" // Always white icon on gradient background
                 )} />
                 <span className={cn(
-                  "font-semibold text-sm",
+                  "font-semibold text-lg", // Increased text size
                   "text-white" // Always white text on gradient background
                 )}>
                   {city.name}
