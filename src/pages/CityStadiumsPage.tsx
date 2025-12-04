@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Building, Landmark, Globe, Mountain, Sun, Ship, Eye, Video } from "lucide-react";
+import { MapPin, Building, Landmark, Globe, Mountain, Sun, Ship, Eye, Video, Hotel } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Stadium {
@@ -17,6 +17,7 @@ interface CityData {
   stadiums: Stadium[];
   gradient: string;
   icon: React.ElementType;
+  hotels?: string[]; // Added hotels property
 }
 
 const citiesAndStadiums: CityData[] = [
@@ -30,18 +31,21 @@ const citiesAndStadiums: CityData[] = [
     ],
     gradient: "from-primary to-secondary",
     icon: Landmark,
+    hotels: ["Helnan Chellah Hotel", "Le Pietri Urban Hotel", "Cantor Hotel Rabat Terminus"],
   },
   {
     name: "Casablanca",
     stadiums: [{ name: "Stade Mohammed V", city: "Casablanca", description: "The iconic stadium in Casablanca, a hub for Moroccan football.", imagePlaceholder: "bg-gradient-to-br from-moroccanRed to-gold", imageUrl: "https://fr.hibapress.com/wp-content/uploads/2024/09/Le-groupe-Al-Bayda-fixe-la-date-douverture-du-Stade-Mohammed.jpeg" }],
     gradient: "from-moroccanRed to-gold",
     icon: Building,
+    hotels: ["Le 22 Appart'Hotel", "Stayhere Casablanca – Maarif – Elite Residence", "Kenzi Tower Hotel", "Four Seasons Hotel Casablanca"], // Added one more hotel
   },
   {
     name: "Agadir",
     stadiums: [{ name: "Grand Stade d’Agadir", city: "Agadir", description: "A large, modern stadium in the coastal city of Agadir.", imagePlaceholder: "bg-gradient-to-br from-gold to-electricGreen", imageUrl: "https://leseco.ma/wp-content/uploads/2023/07/Grand-Stade-Adrar-Agadir.jpg" }],
     gradient: "from-gold to-electricGreen",
     icon: Sun,
+    hotels: [], // No specific hotels provided
   },
   {
     name: "Fes",
@@ -54,6 +58,7 @@ const citiesAndStadiums: CityData[] = [
     stadiums: [{ name: "Grand Stade de Marrakech", city: "Marrakech", description: "A grand stadium in the vibrant city of Marrakech.", imagePlaceholder: "bg-gradient-to-br from-accent to-primary", imageUrl: "https://www.anep.ma/sites/default/files/styles/news/public/2023-09/STADE%20KECH%20.jpg?itok=vxs9GHu3" }],
     gradient: "from-accent to-primary",
     icon: Mountain,
+    hotels: ["Le Relais De Marrakech", "Marrakech Ryads Parc All Inclusive"],
   },
   {
     name: "Tangier",
@@ -100,7 +105,7 @@ const CityStadiumsPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {cityData.stadiums.map((stadium, index) => (
             <Card
               key={stadium.name}
@@ -141,6 +146,28 @@ const CityStadiumsPage = () => {
             </Card>
           ))}
         </div>
+
+        {cityData.hotels && cityData.hotels.length > 0 && (
+          <div className="animate-fade-in" style={{ animationDelay: `${cityData.stadiums.length * 0.1 + 0.2}s` }}>
+            <Card className="bg-card/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Hotel className="h-6 w-6 text-primary" /> Recommended Hotels in {cityData.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {cityData.hotels.map((hotel, index) => (
+                    <li key={index} className="flex items-center gap-3 p-3 border border-border rounded-lg bg-background/50">
+                      <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0"></span>
+                      <span className="text-lg font-medium">{hotel}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );
