@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import TravelPackages from "@/components/TravelPackages";
 import { Loader2 } from "lucide-react";
+import StadiumSelection from "@/components/StadiumSelection"; // Import the new component
 
 const Dashboard = () => {
   const { user, session, loading: authLoading } = useAuth();
@@ -55,6 +56,8 @@ const Dashboard = () => {
     );
   }
 
+  const hasPackages = packages && packages.length > 0;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto p-4 md:p-8">
@@ -80,30 +83,34 @@ const Dashboard = () => {
           </div>
         ) : isError ? (
           <p className="text-destructive text-center">Failed to load your packages. Please try again later.</p>
-        ) : packages && packages.length > 0 ? (
-          <Card className="bg-card/50">
-            <CardHeader>
-              <CardTitle>Your Purchased Packages</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-4">
-                {packages.map((pkg, index) => (
-                  <li
-                    key={index}
-                    className="p-4 border border-border rounded-lg flex justify-between items-center"
-                  >
-                    <div>
-                      <p className="font-semibold text-lg">{pkg.package_name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Purchased on: {new Date(pkg.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <Button variant="outline" disabled>View Details</Button>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+        ) : hasPackages ? (
+          <div className="space-y-8">
+            <Card className="bg-card/50">
+              <CardHeader>
+                <CardTitle>Your Purchased Packages</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-4">
+                  {packages.map((pkg, index) => (
+                    <li
+                      key={index}
+                      className="p-4 border border-border rounded-lg flex justify-between items-center"
+                    >
+                      <div>
+                        <p className="font-semibold text-lg">{pkg.package_name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Purchased on: {new Date(pkg.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <Button variant="outline" disabled>View Details</Button>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+            {/* Display StadiumSelection if user has packages */}
+            <StadiumSelection />
+          </div>
         ) : (
           <div>
             <div className="text-center mb-8">
