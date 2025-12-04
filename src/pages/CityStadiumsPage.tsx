@@ -49,7 +49,7 @@ const citiesAndStadiums: CityData[] = [
   },
   {
     name: "Fes",
-    stadiums: [{ name: "Complexe Sportif de Fès", city: "Fes", description: "A significant stadium in the historic city of Fes.", imagePlaceholder: "bg-gradient-to-br from-royalBlue to-moroccanRed", imageUrl: "https://sport.le360.ma/resizer/v2/2NIUGCJUTBFZJEFRDYZRPNABVE.jpeg?auth=ceb103447291c6b1bca58fdad1c3ade6a3a01ca3c35376603de67cec5ce54eab&smart=true&width=1216&height=684" }],
+    stadiums: [{ name: "Complexe Sportif de Fès", city: "Fes", description: "A significant stadium in the historic city of Fes.", imagePlaceholder: "bg-gradient-to-br from-royalBlue to-moroccanRed", imageUrl: "https://sport.le360.ma/resizer/v2/2NIUGCJUTBFZJEFRDYZRPNABVE.jpeg?auth=ceb103447291c6b1bca58fdad1c3ade6a3a01ca3c35376603de67cec54eab&smart=true&width=1216&height=684" }],
     gradient: "from-royalBlue to-moroccanRed",
     icon: Globe,
   },
@@ -139,7 +139,10 @@ const CityStadiumsPage = () => {
                   </Button>
                 </div>
 
-                <Button className="w-full bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full py-6 text-lg">
+                <Button className={cn(
+                  "w-full bg-gradient-to-r text-white rounded-full py-6 text-lg hover:opacity-90 transition-all hover:scale-105",
+                  cityData.gradient // Apply the city's gradient here
+                )}>
                   Explore Stadium
                 </Button>
               </div>
