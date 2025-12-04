@@ -159,14 +159,23 @@ const CityStadiumsPage = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {cityData.hotels.map((hotel, index) => (
-                    <li key={index} className="flex items-center gap-3 p-3 border border-border rounded-lg bg-background/50">
-                      <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0"></span>
-                      <span className="text-lg font-medium">{hotel}</span>
-                    </li>
+                    <Card
+                      key={index}
+                      className={cn(
+                        "group relative overflow-hidden rounded-3xl bg-card/30 backdrop-blur-lg border-2 border-border hover:border-primary transition-all hover:scale-105 hover:shadow-glow animate-fade-in",
+                        `bg-gradient-to-br ${cityData.gradient} text-primary-foreground shadow-glow border-primary` // Apply city gradient
+                      )}
+                      style={{ animationDelay: `${index * 0.05}s` }}
+                    >
+                      <Button className="w-full h-full flex flex-col items-start justify-center p-6 text-white rounded-3xl bg-transparent hover:bg-white/10">
+                        <Hotel className="h-8 w-8 text-white mb-2" />
+                        <span className="text-lg font-medium text-left">{hotel}</span>
+                      </Button>
+                    </Card>
                   ))}
-                </ul>
+                </div>
               </CardContent>
             </Card>
           </div>
