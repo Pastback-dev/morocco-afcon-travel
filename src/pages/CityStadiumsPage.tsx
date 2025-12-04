@@ -9,6 +9,7 @@ interface Stadium {
   city: string;
   description: string;
   imagePlaceholder: string; // Placeholder for image or gradient class
+  imageUrl?: string; // Optional image URL
 }
 
 interface CityData {
@@ -22,10 +23,10 @@ const citiesAndStadiums: CityData[] = [
   {
     name: "Rabat",
     stadiums: [
-      { name: "Complexe Sportif Prince Moulay Abdellah", city: "Rabat", description: "A multi-purpose stadium in Rabat, home to major football events.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary" },
+      { name: "Complexe Sportif Prince Moulay Abdellah", city: "Rabat", description: "A multi-purpose stadium in Rabat, home to major football events.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary", imageUrl: "https://cdn.tfcstadiums.com/wp-content/uploads/2024/12/moulay2.jpg" },
       { name: "Stade Annexe Olympique Complexe Sportif Prince Moulay Abdellah", city: "Rabat", description: "An annex stadium used for training and smaller matches.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary" },
-      { name: "Complexe Sportif Prince Héritier Moulay El Hassan", city: "Rabat", description: "A modern sports complex with various facilities.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary" },
-      { name: "Stade El Barid", city: "Rabat", description: "A local stadium contributing to the city's football infrastructure.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary" },
+      { name: "Complexe Sportif Prince Héritier Moulay El Hassan", city: "Rabat", description: "A modern sports complex with various facilities.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary", imageUrl: "https://sport.le360.ma/resizer/v2/5NRFR2WLRJELXJA3UC6LSIEVUY.jpg?auth=cfbab0d73e68cf8a4f6d4ab9892b410cf4f9aa5585562058dd20c98300f8a22a&smart=true&width=1216&height=684" },
+      { name: "Stade El Barid", city: "Rabat", description: "A local stadium contributing to the city's football infrastructure.", imagePlaceholder: "bg-gradient-to-br from-primary to-secondary", imageUrl: "https://goodmove.ma/wp-content/uploads/2025/11/Stade-Al-Barid-edited.webp" },
     ],
     gradient: "from-primary to-secondary",
     icon: Landmark,
@@ -106,8 +107,12 @@ const CityStadiumsPage = () => {
               className="group relative overflow-hidden rounded-3xl bg-card/30 backdrop-blur-lg border-2 border-border hover:border-primary transition-all hover:scale-105 hover:shadow-glow animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className={cn("h-48 relative flex items-center justify-center", stadium.imagePlaceholder)}>
-                <CityIcon className="h-16 w-16 text-white/80 group-hover:scale-110 transition-transform" />
+              <div className={cn("h-48 relative flex items-center justify-center overflow-hidden", stadium.imageUrl ? "" : stadium.imagePlaceholder)}>
+                {stadium.imageUrl ? (
+                  <img src={stadium.imageUrl} alt={stadium.name} className="absolute inset-0 w-full h-full object-cover" />
+                ) : (
+                  <CityIcon className="h-16 w-16 text-white/80 group-hover:scale-110 transition-transform" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent"></div>
               </div>
 
