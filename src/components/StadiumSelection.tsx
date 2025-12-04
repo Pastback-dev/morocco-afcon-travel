@@ -62,15 +62,6 @@ const citiesAndStadiums: CityData[] = [
 ];
 
 const StadiumSelection = () => {
-  // We no longer need selectedCity state here as navigation handles it
-  // const [selectedCity, setSelectedCity] = useState<string | null>(null);
-
-  // const handleCitySelect = (cityName: string) => {
-  //   setSelectedCity(cityName);
-  // };
-
-  // const currentCityData = citiesAndStadiums.find(city => city.name === selectedCity);
-
   return (
     <Card className="bg-card/50">
       <CardHeader>
@@ -86,16 +77,17 @@ const StadiumSelection = () => {
                 key={city.name}
                 to={`/stadiums/${city.name}`} // Navigate to the new page
                 className={cn(
-                  "rounded-xl p-4 flex flex-col items-center justify-center h-28 w-full text-center transition-all group",
-                  `bg-gradient-to-br ${city.gradient} text-primary-foreground shadow-glow border-primary` // Always apply gradient for visual appeal
+                  "group relative overflow-hidden rounded-3xl bg-card/30 backdrop-blur-lg border-2 border-border hover:border-primary transition-all hover:scale-105 hover:shadow-glow animate-fade-in", // Card-like styling
+                  `bg-gradient-to-br ${city.gradient} text-primary-foreground shadow-glow border-primary`, // Always apply gradient for visual appeal
+                  "flex flex-col items-center justify-center h-48 w-full text-center p-4" // Increased height and padding
                 )}
               >
                 <CityIcon className={cn(
-                  "h-12 w-12 mb-2 transition-transform group-hover:scale-110", // Increased icon size
+                  "h-16 w-16 mb-2 transition-transform group-hover:scale-110", // Increased icon size
                   "text-white" // Always white icon on gradient background
                 )} />
                 <span className={cn(
-                  "font-semibold text-lg", // Increased text size
+                  "font-bold text-2xl", // Increased text size and made bold
                   "text-white" // Always white text on gradient background
                 )}>
                   {city.name}
@@ -104,8 +96,6 @@ const StadiumSelection = () => {
             );
           })}
         </div>
-
-        {/* Removed conditional rendering of stadiums as they are now on a separate page */}
       </CardContent>
     </Card>
   );
