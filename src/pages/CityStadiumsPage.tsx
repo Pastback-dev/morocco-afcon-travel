@@ -39,7 +39,7 @@ const citiesAndStadiums: CityData[] = [
   },
   {
     name: "Agadir",
-    stadiums: [{ name: "Grand Stade d’Agadir", city: "Agadir", description: "A large, modern stadium in the coastal city of Agadir.", imagePlaceholder: "bg-gradient-to-br from-gold to-electricGreen" }],
+    stadiums: [{ name: "Grand Stade d’Agadir", city: "Agadir", description: "A large, modern stadium in the coastal city of Agadir.", imagePlaceholder: "bg-gradient-to-br from-gold to-electricGreen", imageUrl: "https://leseco.ma/wp-content/uploads/2023/07/Grand-Stade-Adrar-Agadir.jpg" }],
     gradient: "from-gold to-electricGreen",
     icon: Sun,
   },
