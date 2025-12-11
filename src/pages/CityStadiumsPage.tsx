@@ -1,4 +1,4 @@
-import { useParams, useNavigate } => "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Building, Landmark, Globe, Mountain, Sun, Ship, Eye, Video, Hotel as HotelIcon } from "lucide-react";
