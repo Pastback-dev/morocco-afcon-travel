@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Hotel as HotelIcon, MapPin, Info } from "lucide-react";
-import { cn } = "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 // Re-defining the data structure for hotels and cities for this page's self-containment.
 // In a larger application, this data would ideally be centralized or fetched from an API.
@@ -99,6 +99,8 @@ const allCitiesAndHotels: CityData[] = [
     icon: Ship,
     hotels: [],
   },
+  { name: "Agadir", gradient: "from-gold to-electricGreen", hotels: [] },
+  { name: "Fes", gradient: "from-royalBlue to-moroccanRed", hotels: [] },
 ];
 
 const HotelDetailsPage = () => {
