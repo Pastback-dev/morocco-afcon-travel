@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Hotel as HotelIcon, MapPin, Info } from "lucide-react";
+import { Hotel as HotelIcon, MapPin, Info, Ship } from "lucide-react"; // Added Ship
 import { cn } from "@/lib/utils";
 
 // Re-defining the data structure for hotels and cities for this page's self-containment.
