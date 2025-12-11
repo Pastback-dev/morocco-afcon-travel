@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Hotel as HotelIcon, MapPin, Info } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } = "@/lib/utils";
 
 // Re-defining the data structure for hotels and cities for this page's self-containment.
 // In a larger application, this data would ideally be centralized or fetched from an API.
@@ -80,22 +80,25 @@ const allCitiesAndHotels: CityData[] = [
     hotels: [
       {
         name: "Le Relais De Marrakech",
-        description: "A charming hotel offering a peaceful retreat with traditional Moroccan hospitality.",
-        googleMapsLink: "https://maps.app.goo.gl/search?q=Le+Relais+De+Marrakech",
-        googleMapsEmbedLink: "https://maps.google.com/maps?q=Le+Relais+De+Marrakech&t=&z=13&ie=UTF8&iwloc=&output=embed",
+        description: "Located at the entrance of Marrakech in the Palmeraie area, Le Relais de Marrakech is set in a garden with a hot tub and offers free Wi-Fi, just a 10-minute drive from Marrakech's Medina Com-hotel. Spanning a vast 3-hectare park, this unique property offers comfortable accommodations in nomad tents, African huts, or air-conditioned Kasbahs, all with traditional Moroccan and Berber decoration Allhotelsmorocco. The domain features a jacuzzi, infinity swimming pool, deckchairs, hammocks, and small lounges all designed to help you relax while enjoying the calm of nature Helnan. Each spacious room, suite, and tent includes a private bathroom with shower, and some have private terraces and seating areas. The on-site restaurant serves Moroccan cuisine on its terrace with views of the beautifully landscaped garden Com-hotel. Additional facilities include a fitness area, spa with massage treatments, beauty services, and a game of pétanque. This property is particularly suitable for families with children, featuring a playground, trampoline, and free-roaming animals like cats, chickens, and peacocks Booking.com. The property also welcomes campers, RVs, and adventure travelers. Guests consistently praise the peaceful atmosphere, friendly staff, beautiful gardens, and excellent value for money.",
+        googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Le+Relais+de+Marrakech+Douar+Oulaad+Bellaguid+Marrakech",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Le+Relais+de+Marrakech+Douar+Oulaad+Bellaguid+Marrakech&t=&z=13&ie=UTF8&iwloc=&output=embed",
       },
       {
         name: "Marrakech Ryads Parc All Inclusive",
-        description: "An all-inclusive resort providing a comprehensive and relaxing stay.",
-        googleMapsLink: "https://maps.app.goo.gl/search?q=Marrakech+Ryads+Parc+All+Inclusive",
-        googleMapsEmbedLink: "https://maps.google.com/maps?q=Marrakech+Ryads+Parc+All+Inclusive&t=&z=13&ie=UTF8&iwloc=&output=embed",
+        description: "This 4-star all-inclusive hotel features an impressive outdoor pool measuring 1,200 square meters with a poolside snack bar offering panoramic views of the Atlas Mountains, plus a 1,400 square meter spa including free use of exercise equipment and an aerobics room Tripadvisor. The hotel combines modern design with traditional Moroccan elements, featuring 260 spacious rooms distributed across 13 ryads, all offering views of the gardens, pool area, or Atlas Mountains Allhotelsmorocco. Opened in 2008, the property blends traditional architecture with the most modern installations MakeMyTrip. Each air-conditioned room includes modern Moroccan décor, a private bathroom, minibar, flat-screen TV, safe, and a terrace or balcony. The all-inclusive hotel offers 4 on-site restaurants serving international and Moroccan cuisine, along with a poolside bar and lounge bar Lepietri. The WUD spa offers massages, body scrubs, body treatments, and facials, while active guests can enjoy bowling, racquetball/squash, basketball, 2 tennis courts, volleyball, soccer field, and a fitness center with yoga classes Booking.com. There's a free kids club for children with daily activities and entertainment programs Allhotelsmorocco. The hotel also features 6 meeting rooms accommodating 70 to 900 people, making it ideal for conferences and conventions. Located in the Ouahat Sidi Brahim area, the hotel is within a 15-minute drive of Jardin Majorelle and Avenue Mohamed VI Hotels.com. Guests appreciate the spacious rooms, excellent staff service, beautiful views, comprehensive facilities, and great value for an all-inclusive resort.",
+        googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Marrakech+Ryads+Parc+All+Inclusive+Douar+Ouled+Benrrahmoun",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Marrakech+Ryads+Parc+All+Inclusive+Douar+Ouled+Benrrahmoun&t=&z=13&ie=UTF8&iwloc=&output=embed",
       },
     ],
   },
-  // Other cities with no hotels or empty hotel arrays
-  { name: "Agadir", gradient: "from-gold to-electricGreen", hotels: [] },
-  { name: "Fes", gradient: "from-royalBlue to-moroccanRed", hotels: [] },
-  { name: "Tangier", gradient: "from-secondary to-gold", hotels: [] },
+  {
+    name: "Tangier",
+    stadiums: [{ name: "Grand Stade de Tanger", city: "Tangier", description: "A major stadium in Tangier, the gateway to Africa.", imagePlaceholder: "bg-gradient-to-br from-secondary to-gold", imageUrl: "https://sport.le360.ma/resizer/v2/Z2WTISO555GRTARZBJ2O3YR7LE.JPG?auth=0f582b6063f8b5ed4537897c89db9e813f1a3cbfed93e2224c109d59587d73d3&smart=true&width=1216&height=684" }],
+    gradient: "from-secondary to-gold",
+    icon: Ship,
+    hotels: [],
+  },
 ];
 
 const HotelDetailsPage = () => {
