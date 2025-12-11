@@ -1,8 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Building, Landmark, Globe, Mountain, Sun, Ship, Eye, Video, Hotel } from "lucide-react";
+import { MapPin, Building, Landmark, Globe, Mountain, Sun, Ship, Eye, Video, Hotel as HotelIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom"; // Import Link
 
 interface Stadium {
   name: string;
@@ -12,12 +13,19 @@ interface Stadium {
   imageUrl?: string; // Optional image URL
 }
 
+interface Hotel {
+  name: string;
+  description: string;
+  googleMapsLink: string;
+  googleMapsEmbedLink: string;
+}
+
 interface CityData {
   name: string;
   stadiums: Stadium[];
   gradient: string;
   icon: React.ElementType;
-  hotels?: string[]; // Added hotels property
+  hotels?: Hotel[]; // Updated to array of Hotel objects
 }
 
 const citiesAndStadiums: CityData[] = [
@@ -31,14 +39,58 @@ const citiesAndStadiums: CityData[] = [
     ],
     gradient: "from-primary to-secondary",
     icon: Landmark,
-    hotels: ["Helnan Chellah Hotel", "Le Pietri Urban Hotel", "Cantor Hotel Rabat Terminus"],
+    hotels: [
+      {
+        name: "Helnan Chellah Hotel",
+        description: "Located in the center of Rabat close to attractions and shopping centers, this hotel features spacious rooms with elegant furniture, minibars, air conditioning, and TVs Com-hotel. The Archaeology Museum is directly in front of the hotel, and the nearest train station is Gare Rabat Ville, which is 1 km away Com-hotel. The hotel offers two on-site restaurants serving Moroccan cuisine, a spa with wellness treatments, and a marina. Guests appreciate its location near the train station and museums, with free WiFi and parking available Hotels.com.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Helnan+Chellah+Hotel+Rabat",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Helnan+Chellah+Hotel+Rabat&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+      {
+        name: "Le Pietri Urban Hotel",
+        description: "This 3-star hotel is situated right in the center of Rabat within walking distance of cultural attractions like Bab Rouah Gate and near the Mohammed VI Museum of Modern and Contemporary Art Allhotelsmorocco. Rabat-ville train station is a 5-minute walk away, and the property is a 5-minute drive from Hassan Tower Booking.com. The hotel features 35 air-conditioned rooms, an on-site restaurant called 'Le Bistrot du Pietri' serving Mediterranean cuisine with live music, and a terrace. Guests consistently praise its excellent location, cleanliness, comfortable rooms, and very helpful staff Booking.com.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Le+Pietri+Urban+Hotel+Rabat",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Le+Pietri+Urban+Hotel+Rabat&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+      {
+        name: "Cantor Hotel Rabat Terminus (ONOMO Hotel Rabat Terminus)",
+        description: "This 4-star hotel is located 300 meters from the Moroccan Parliament and offers city views from its sun terrace and rooftop restaurant Booking.comAllhotelsmorocco. Built as a historic Art Deco building from 1902, it was the first hotel in Rabat and has been completely renovated Allhotelsmorocco. The hotel features 118 air-conditioned rooms, free WiFi and parking, a spa with wellness treatments, a fitness center, and a rooftop bar called 'AZOUR' with panoramic city views. Guests particularly appreciate its location directly across from Rabat Ville train station and its rooftop restaurant with beautiful views Booking.com.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=ONOMO+Hotel+Rabat+Terminus",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=ONOMO+Hotel+Rabat+Terminus&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+    ],
   },
   {
     name: "Casablanca",
     stadiums: [{ name: "Stade Mohammed V", city: "Casablanca", description: "The iconic stadium in Casablanca, a hub for Moroccan football.", imagePlaceholder: "bg-gradient-to-br from-moroccanRed to-gold", imageUrl: "https://fr.hibapress.com/wp-content/uploads/2024/09/Le-groupe-Al-Bayda-fixe-la-date-douverture-du-Stade-Mohammed.jpeg" }],
     gradient: "from-moroccanRed to-gold",
     icon: Building,
-    hotels: ["Le 22 Appart'Hotel", "Stayhere Casablanca – Maarif – Elite Residence", "Kenzi Tower Hotel", "Four Seasons Hotel Casablanca"], // Added one more hotel
+    hotels: [
+      {
+        name: "Le 22 Appart'Hotel",
+        description: "Modern apartment hotel offering comfortable stays in Casablanca.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Le+22+Appart%27Hotel+Casablanca",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Le+22+Appart%27Hotel+Casablanca&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+      {
+        name: "Stayhere Casablanca – Maarif – Elite Residence",
+        description: "Stylish residence in the Maarif district, ideal for extended stays.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Stayhere+Casablanca+%E2%80%93+Maarif+%E2%80%93+Elite+Residence",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Stayhere+Casablanca+%E2%80%93+Maarif+%E2%80%93+Elite+Residence&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+      {
+        name: "Kenzi Tower Hotel",
+        description: "A landmark hotel offering luxurious accommodation and panoramic city views.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Kenzi+Tower+Hotel+Casablanca",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Kenzi+Tower+Hotel+Casablanca&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+      {
+        name: "Four Seasons Hotel Casablanca",
+        description: "An exquisite beachfront luxury hotel with world-class amenities.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Four+Seasons+Hotel+Casablanca",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Four+Seasons+Hotel+Casablanca&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+    ],
   },
   {
     name: "Agadir",
@@ -52,19 +104,34 @@ const citiesAndStadiums: CityData[] = [
     stadiums: [{ name: "Complexe Sportif de Fès", city: "Fes", description: "A significant stadium in the historic city of Fes.", imagePlaceholder: "bg-gradient-to-br from-royalBlue to-moroccanRed", imageUrl: "https://sport.le360.ma/resizer/v2/2NIUGCJUTBFZJEFRDYZRPNABVE.jpeg?auth=ceb103447291c6b1bca58fdad1c3ade6a3a01ca3c35376603de67cec54eab&smart=true&width=1216&height=684" }],
     gradient: "from-royalBlue to-moroccanRed",
     icon: Globe,
+    hotels: [],
   },
   {
     name: "Marrakech",
     stadiums: [{ name: "Grand Stade de Marrakech", city: "Marrakech", description: "A grand stadium in the vibrant city of Marrakech.", imagePlaceholder: "bg-gradient-to-br from-accent to-primary", imageUrl: "https://www.anep.ma/sites/default/files/styles/news/public/2023-09/STADE%20KECH%20.jpg?itok=vxs9GHu3" }],
     gradient: "from-accent to-primary",
     icon: Mountain,
-    hotels: ["Le Relais De Marrakech", "Marrakech Ryads Parc All Inclusive"],
+    hotels: [
+      {
+        name: "Le Relais De Marrakech",
+        description: "A charming hotel offering a peaceful retreat with traditional Moroccan hospitality.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Le+Relais+De+Marrakech",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Le+Relais+De+Marrakech&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+      {
+        name: "Marrakech Ryads Parc All Inclusive",
+        description: "An all-inclusive resort providing a comprehensive and relaxing stay.",
+        googleMapsLink: "https://maps.app.goo.gl/search?q=Marrakech+Ryads+Parc+All+Inclusive",
+        googleMapsEmbedLink: "https://maps.google.com/maps?q=Marrakech+Ryads+Parc+All+Inclusive&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      },
+    ],
   },
   {
     name: "Tangier",
     stadiums: [{ name: "Grand Stade de Tanger", city: "Tangier", description: "A major stadium in Tangier, the gateway to Africa.", imagePlaceholder: "bg-gradient-to-br from-secondary to-gold", imageUrl: "https://sport.le360.ma/resizer/v2/Z2WTISO555GRTARZBJ2O3YR7LE.JPG?auth=0f582b6063f8b5ed4537897c89db9e813f1a3cbfed93e2224c109d59587d73d3&smart=true&width=1216&height=684" }],
     gradient: "from-secondary to-gold",
     icon: Ship,
+    hotels: [],
   },
 ];
 
@@ -155,25 +222,25 @@ const CityStadiumsPage = () => {
             <Card className="bg-card/50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Hotel className="h-6 w-6 text-primary" /> Recommended Hotels in {cityData.name}
+                  <HotelIcon className="h-6 w-6 text-primary" /> Recommended Hotels in {cityData.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {cityData.hotels.map((hotel, index) => (
-                    <Card
-                      key={index}
+                    <Link
+                      key={hotel.name}
+                      to={`/hotels/${encodeURIComponent(hotel.name)}`} // Link to hotel details page
                       className={cn(
                         "group relative overflow-hidden rounded-3xl bg-card/30 backdrop-blur-lg border-2 border-border hover:border-primary transition-all hover:scale-105 hover:shadow-glow animate-fade-in",
-                        `bg-gradient-to-br ${cityData.gradient} text-primary-foreground shadow-glow border-primary` // Apply city gradient
+                        `bg-gradient-to-br ${cityData.gradient} text-primary-foreground shadow-glow border-primary`, // Apply city gradient
+                        "flex flex-col items-start justify-center p-6 text-white rounded-3xl bg-transparent hover:bg-white/10" // Button-like styling
                       )}
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <Button className="w-full h-full flex flex-col items-start justify-center p-6 text-white rounded-3xl bg-transparent hover:bg-white/10">
-                        <Hotel className="h-8 w-8 text-white mb-2" />
-                        <span className="text-lg font-medium text-left">{hotel}</span>
-                      </Button>
-                    </Card>
+                      <HotelIcon className="h-8 w-8 text-white mb-2" />
+                      <span className="text-lg font-medium text-left">{hotel.name}</span>
+                    </Link>
                   ))}
                 </div>
               </CardContent>
