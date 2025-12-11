@@ -9,7 +9,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
 import CityStadiumsPage from "./pages/CityStadiumsPage";
-import HotelDetailsPage from "./pages/HotelDetailsPage"; // Import the new page
+import HotelDetailsPage from "./pages/HotelDetailsPage";
+import StadiumDetailsPage from "./pages/StadiumDetailsPage"; // Import the new page
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -27,7 +28,8 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/stadiums/:cityName" element={<CityStadiumsPage />} />
-            <Route path="/hotels/:hotelName" element={<HotelDetailsPage />} /> {/* New route */}
+            <Route path="/hotels/:hotelName" element={<HotelDetailsPage />} />
+            <Route path="/stadiums/details/:stadiumName" element={<StadiumDetailsPage />} /> {/* New route */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
