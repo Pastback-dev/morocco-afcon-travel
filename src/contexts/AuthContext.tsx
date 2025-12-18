@@ -27,13 +27,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
+    console.log("AuthContext: Setting up auth state listener.");
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
+        console.log(`AuthContext: onAuthStateChange event: ${_event}, session:`, session);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
 
         if (session?.user) {
+          console.log("AuthContext: User found in session, fetching profile...");
           // Fetch user profile to get the role
           const { data: profile, error } = await supabase
             .from("profiles")
@@ -42,12 +45,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             .single();
 
           if (error) {
-            console.error("Error fetching user profile:", error);
+            console.error("AuthContext: Error fetching user profile:", error);
             setIsAdmin(false);
           } else {
-            setIsAdmin(profile?.role === "admin");
+            const newIsAdmin = profile?.role === "admin";
+            console.log(`AuthContext: Profile fetched. User role: ${profile?.role}, isAdmin: ${newIsAdmin}`);
+            setIsAdmin(newIsAdmin);
           }
         } else {
+          console.log("AuthContext: No user in session, isAdmin set to false.");
           setIsAdmin(false);
         }
       }
@@ -55,10 +61,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Fetch initial session and profile
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log("AuthContext: Initial getSession call. Session:", session);
       setSession(session);
       setUser(session?.user ?? null);
 
       if (session?.user) {
+        console.log("AuthContext: Initial session has user, fetching profile...");
         const { data: profile, error } = await supabase
           .from("profiles")
           .select("role")
@@ -66,24 +74,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           .single();
 
         if (error) {
-          console.error("Error fetching initial user profile:", error);
+          console.error("AuthContext: Error fetching initial user profile:", error);
           setIsAdmin(false);
         } else {
-          setIsAdmin(profile?.role === "admin");
+          const newIsAdmin = profile?.role === "admin";
+          console.log(`AuthContext: Initial profile fetched. User role: ${profile?.role}, isAdmin: ${newIsAdmin}`);
+          setIsAdmin(newIsAdmin);
         }
       } else {
+        console.log("AuthContext: Initial session has no user, isAdmin set to false.");
         setIsAdmin(false);
       }
       setLoading(false);
+      console.log("AuthContext: Initial loading set to false.");
     });
 
     return () => {
+      console.log("AuthContext: Cleaning up auth state listener.");
       authListener.subscription.unsubscribe();
     };
   }, []);
 
   const handleSignOut = async () => {
+    console.log("AuthContext: Signing out...");
     await supabase.auth.signOut();
+    console.log("AuthContext: Signed out, navigating to /login.");
     navigate("/login"); // Explicitly navigate to login after sign out
   };
 
