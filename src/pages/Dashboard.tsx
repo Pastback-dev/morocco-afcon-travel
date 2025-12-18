@@ -7,10 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import TravelPackages from "@/components/TravelPackages";
 import { Loader2 } from "lucide-react";
-import StadiumSelection from "@/components/StadiumSelection"; // Import the new component
+import StadiumSelection from "@/components/StadiumSelection";
+import QRScanner from "@/components/QRScanner";
 
 const Dashboard = () => {
-  const { user, session, loading: authLoading, signOut } = useAuth(); // Get signOut from useAuth
+  const { user, session, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
 
   const fetchUserPackages = async () => {
@@ -20,18 +21,13 @@ const Dashboard = () => {
       .select("package_name, created_at")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
-
     if (error) {
       throw new Error(error.message);
     }
     return data;
   };
 
-  const {
-    data: packages,
-    isLoading: packagesLoading,
-    isError,
-  } = useQuery({
+  const { data: packages, isLoading: packagesLoading, isError } = useQuery({
     queryKey: ["userPackages", user?.id],
     queryFn: fetchUserPackages,
     enabled: !!user,
@@ -42,13 +38,6 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, [session, authLoading, navigate]);
-
-  // handleSignOut is now directly from AuthContext
-  // const handleSignOut = async () => {
-  //   await supabase.auth.signOut();
-  //   // Navigation will now be handled by the AuthContext's onAuthStateChange listener
-  //   // which will set session to null, triggering the useEffect above to navigate to /login.
-  // };
 
   if (authLoading || !user) {
     return (
@@ -65,11 +54,10 @@ const Dashboard = () => {
       <div className="container mx-auto p-4 md:p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button onClick={signOut} variant="outline"> {/* Use signOut from context */}
+          <Button onClick={signOut} variant="outline">
             Sign Out
           </Button>
         </div>
-
         <Card className="bg-card/50 mb-8">
           <CardHeader>
             <CardTitle>Welcome, {user.email}</CardTitle>
@@ -78,6 +66,11 @@ const Dashboard = () => {
             <p className="text-muted-foreground">Manage your travel packages and account details here.</p>
           </CardContent>
         </Card>
+
+        {/* QR Scanner Section */}
+        <div className="mb-8">
+          <QRScanner />
+        </div>
 
         {packagesLoading ? (
           <div className="flex justify-center py-12">
@@ -94,10 +87,7 @@ const Dashboard = () => {
               <CardContent>
                 <ul className="space-y-4">
                   {packages.map((pkg, index) => (
-                    <li
-                      key={index}
-                      className="p-4 border border-border rounded-lg flex justify-between items-center"
-                    >
+                    <li key={index} className="p-4 border border-border rounded-lg flex justify-between items-center">
                       <div>
                         <p className="font-semibold text-lg">{pkg.package_name}</p>
                         <p className="text-sm text-muted-foreground">
@@ -110,7 +100,6 @@ const Dashboard = () => {
                 </ul>
               </CardContent>
             </Card>
-            {/* Display StadiumSelection if user has packages */}
             <StadiumSelection />
           </div>
         ) : (

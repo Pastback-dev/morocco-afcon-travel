@@ -9,10 +9,10 @@ interface Stadium {
   name: string;
   city: string;
   description: string;
-  imagePlaceholder: string; // Placeholder for image or gradient class
-  imageUrl?: string; // Optional image URL
-  googleMapsLink: string; // Added Google Maps link
-  googleMapsEmbedLink: string; // Added Google Maps embed link
+  imagePlaceholder: string;
+  imageUrl?: string;
+  googleMapsLink: string;
+  googleMapsEmbedLink: string;
 }
 
 interface Hotel {
@@ -37,7 +37,7 @@ const citiesAndStadiums: CityData[] = [
       {
         name: "Complexe Sportif Prince Moulay Abdellah",
         city: "Rabat",
-        description: "This is a football stadium in Rabat with a seating capacity of 69,500, opened on September 5, 2025, and serves as the home stadium of Morocco's national football team Expedia. The stadium underwent complete demolition in August 2023 to construct a new venue that meets FIFA standards, with the project accelerated following Morocco's selection to host the 2025 Africa Cup of Nations and the 2030 FIFA World Cup Com-hotel. Designed by the prestigious international firm Populous, the stadium features a luminous LED parametric facade covering 100,000 square meters with 19,200 unique aluminum triangles and 70 km of LED strips that create spectacular light shows Vivehotels. The Prince Héritier Moulay El Hassan officially inaugurated the stadium on September 4, 2025, representing King Mohammed VI Com-hotel. The venue is part of a larger sports complex that includes an athletics stadium, the indoor Salle Moulay Abdellah arena, and an Olympic swimming pool Helnan. The stadium features a panoramic roof, VIP and VVIP hospitality areas, 110 luxury boxes, five hospitality lounges with nearly 5,400 seats, a press tribune with 1,803 seats, and Africa's first hybrid natural grass pitch combining natural turf with synthetic fibers Hotels.com. The complex is designated to host the opening match and final of AFCON 2025, as well as a semi-final of the 2030 FIFA World Cup. Located 7km from the center of Rabat, the complex is adjacent to Rabat Zoo and surrounded by the capital's green belt covering 1,000 hectares Helnan.",
+        description: "This is a football stadium in Rabat with a seating capacity of 69,500, opened on September 5, 2025, and serves as the home stadium of Morocco's national football team Expedia. The stadium underwent complete demolition in August 2023 to construct a new venue that meets FIFA standards, with the project accelerated following Morocco's selection to host the 2025 Africa Cup of Nations and the 2030 FIFA World Cup Com-hotel. Designed by the prestigious international firm Populous, the stadium features a luminous LED parametric facade covering 100,000 square meters with 19,200 unique aluminum triangles and 70 km of LED strips that create spectacular light shows Vivehotels. The Prince Héritier Moulay El Hassan officially inaugurated the stadium on September 4, 2025, representing King Mohammed VI Com-hotel. The venue is part of a larger sports complex that includes an athletics stadium, the indoor Salle Moulay Abdellah arena, and an Olympic swimming pool Helnan. The stadium features a panoramic roof, VIP and VVVIP hospitality areas, 110 luxury boxes, five hospitality lounges with nearly 5,400 seats, a press tribune with 1,803 seats, and Africa's first hybrid natural grass pitch combining natural turf with synthetic fibers Hotels.com. The complex is designated to host the opening match and final of AFCON 2025, as well as a semi-final of the 2030 FIFA World Cup. Located 7km from the center of Rabat, the complex is adjacent to Rabat Zoo and surrounded by the capital's green belt covering 1,000 hectares Helnan.",
         imagePlaceholder: "bg-gradient-to-br from-primary to-secondary",
         imageUrl: "https://cdn.tfcstadiums.com/wp-content/uploads/2024/12/moulay2.jpg",
         googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Complexe+Sportif+Prince+Moulay+Abdellah+Rabat",
@@ -153,7 +153,7 @@ const citiesAndStadiums: CityData[] = [
     stadiums: [{
       name: "Complexe Sportif de Fès",
       city: "Fes",
-      description: "This stadium with typical Moroccan architectural style has a total capacity of 35,000 seated places and is located on the route connecting Fes to Sefrou Lets Book Hotel. Plans for the stadium were realized by Moroccan architects and engineers with construction launched in 1992, though work only began two years later and was originally scheduled to finish in 1997 to host the 1997 African Junior Cup of Nations that Morocco was organizing Lets Book Hotel. The stadium wasn't delivered on time due to technical problems and wasn't completed until 2003, with the complex undergoing complete renovation for Morocco's 2006 and 2010 World Cup bids, adding 5,000 places to reach a total capacity of 45,000 seated places Lets Book Hotel. The stadium was officially inaugurated on November 25, 2007, four years after completion, with the 2006-07 Throne Cup final between FAR Rabat and Rachad Bernoussi, with free entry and 40,000 spectators from different Moroccan cities attending Hotelrunner. After 13 months of renovation completed in June 2025, the stadium now respects international standards and enriches the architectural heritage of Fes, mobilizing over 7,000 workers (mostly from Fes) with more than 7 million work hours Vivehotels. The complex features 12 VIP/VVIP lounges, 3 exclusive VIP/VVIP salons, natural grass main pitch, classic tartan athletics track with 8 lanes, 3 natural grass training fields, and 4 modern locker rooms Booking.com. The stadium features over 500 surveillance cameras including PTZ cameras with facial recognition, automatic license plate reading systems, and a centralized control room for real-time monitoring Vivehotels. Following AFCON 2025, a second phase of work will be launched to make the complex compliant with FIFA standards for the 2030 World Cup, including removal of the athletics track, complete stadium coverage, and significant capacity increase to 55,800 by 2028 Hotelrunner.",
+      description: "This stadium with typical Moroccan architectural style has a total capacity of 35,000 seated places and is located on the route connecting Fes to Sefrou Lets Book Hotel. Plans for the stadium were realized by Moroccan architects and engineers with construction launched in 1992, though work only began two years later and was originally scheduled to finish in 1997 to host the 1997 African Junior Cup of Nations that Morocco was organizing Lets Book Hotel. The stadium wasn't delivered on time due to technical problems and wasn't completed until 2003, with the complex undergoing complete renovation for Morocco's 2006 and 2010 World Cup bids, adding 5,000 places to reach a total capacity of 45,000 seated places Lets Book Hotel. The stadium was officially inaugurated on November 25, 2007, four years after completion, with the 2006-07 Throne Cup final between FAR Rabat and Rachad Bernoussi, with free entry and 40,000 spectators from different Moroccan cities attending Hotelrunner. After 13 months of renovation completed in June 2025, the stadium now respects international standards and enriches the architectural heritage of Fes, mobilizing over 7,000 workers (mostly from Fes) with more than 7 million work hours Vivehotels. The complex features 12 VIP/VVVIP lounges, 3 exclusive VIP/VVVIP salons, natural grass main pitch, classic tartan athletics track with 8 lanes, 3 natural grass training fields, and 4 modern locker rooms Booking.com. The stadium features over 500 surveillance cameras including PTZ cameras with facial recognition, automatic license plate reading systems, and a centralized control room for real-time monitoring Vivehotels. Following AFCON 2025, a second phase of work will be launched to make the complex compliant with FIFA standards for the 2030 World Cup, including removal of the athletics track, complete stadium coverage, and significant capacity increase to 55,800 by 2028 Hotelrunner.",
       imagePlaceholder: "bg-gradient-to-br from-royalBlue to-moroccanRed",
       imageUrl: "https://sport.le360.ma/resizer/v2/2NIUGCJUTBFZJEFRDYZRPNABVE.jpeg?auth=ceb103447291c6b1bca58fdad1c3ade6a3a01ca3c35376603de67cec54eab&smart=true&width=1216&height=684",
       googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Complexe+Sportif+de+Fes+Route+de+Sefrou",
@@ -168,7 +168,7 @@ const citiesAndStadiums: CityData[] = [
     stadiums: [{
       name: "Grand Stade de Marrakech",
       city: "Marrakech",
-      description: "Inaugurated in January 2011, this stadium is located about 11 kilometers north of the historic city center at the entrance of La Palmeraie, 20 minutes from downtown and the airport Google. Designed by Moroccan architect Sâd Benkirane in collaboration with Italian architect Vittorio Gregotti, the stadium's architecture draws inspiration from Morocco's desert landscapes and historic kasbahs, featuring sand-colored walls, towers, and minaret-like structures Google. Construction started in 2003 and took seven years, with the completed stadium opening on January 5, 2011, celebrated with a four-team tournament featuring Kawkab de Marrakech, Wydad de Casablanca, Olympique Lyonnais, and Paris Saint-Germain Reserving. The stadium hosted the 2013 FIFA Club World Cup final where FC Bayern München defeated Raja Casablanca in front of 37,000 spectators, and the 2014 FIFA Club World Cup final where Real Madrid defeated San Lorenzo Com-hotel. Built on a total surface of 58 hectares, the stadium has a total capacity of 45,240 places including 36,300 covered seats, 200 for the royal tribune, 600 for the honor tribune, 1,130 for media, 700 for disabled persons, and a parking capacity of 7,500 spaces Travel Weekly. For AFCON 2025, the stadium underwent major transformation including removal of the athletics track, lowering the field by six meters, and building new stands closer to the action to enhance atmosphere and viewing experience, turning it into a true football arena Google. The stadium will host group stage fixtures, one Round of 16 match, and a quarter-final during AFCON 2025, with capacity currently at 40,500 places increasing to 45,860 by 2030 Hotels.com. The stadium features 15 VIP/VVIP lounges, 7 exclusive salons, a main restaurant space, 2 large refreshment stands, and 25 strategically positioned refreshment stands.",
+      description: "Inaugurated in January 2011, this stadium is located about 11 kilometers north of the historic city center at the entrance of La Palmeraie, 20 minutes from downtown and the airport Google. Designed by Moroccan architect Sâd Benkirane in collaboration with Italian architect Vittorio Gregotti, the stadium's architecture draws inspiration from Morocco's desert landscapes and historic kasbahs, featuring sand-colored walls, towers, and minaret-like structures Google. Construction started in 2003 and took seven years, with the completed stadium opening on January 5, 2011, celebrated with a four-team tournament featuring Kawkab de Marrakech, Wydad de Casablanca, Olympique Lyonnais, and Paris Saint-Germain Reserving. The stadium hosted the 2013 FIFA Club World Cup final where FC Bayern München defeated Raja Casablanca in front of 37,000 spectators, and the 2014 FIFA Club World Cup final where Real Madrid defeated San Lorenzo Com-hotel. Built on a total surface of 58 hectares, the stadium has a total capacity of 45,240 places including 36,300 covered seats, 200 for the royal tribune, 600 for the honor tribune, 1,130 for media, 700 for disabled persons, and a parking capacity of 7,500 spaces Travel Weekly. For AFCON 2025, the stadium underwent major transformation including removal of the athletics track, lowering the field by six meters, and building new stands closer to the action to enhance atmosphere and viewing experience, turning it into a true football arena Google. The stadium will host group stage fixtures, one Round of 16 match, and a quarter-final during AFCON 2025, with capacity currently at 40,500 places increasing to 45,860 by 2030 Hotels.com. The stadium features 15 VIP/VVVIP lounges, 7 exclusive salons, a main restaurant space, 2 large refreshment stands, and 25 strategically positioned refreshment stands.",
       imagePlaceholder: "bg-gradient-to-br from-accent to-primary",
       imageUrl: "https://www.anep.ma/sites/default/files/styles/news/public/2023-09/STADE%20KECH%20.jpg?itok=vxs9GHu3",
       googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Grand+Stade+de+Marrakech+Route+Nationale+9",
@@ -196,7 +196,7 @@ const citiesAndStadiums: CityData[] = [
     stadiums: [{
       name: "Grand Stade de Tanger",
       city: "Tangier",
-      description: "Named after Ibn Battuta, the famous 14th-century traveler, this stadium is located southwest of Tangier in northern Morocco and cost 844 million dirhams (80 million euros) Lepietri. The inaugural match was played on April 26, 2011, between IR Tanger and Atlético Madrid B, followed by a match between Raja CA and Atlético Madrid Tripadvisor. On July 27, 2011, the stadium hosted the 2011 Trophée des Champions where Marseille beat Lille 5-4, and it hosted the trophy again on July 29, 2017, when Paris Saint-Germain beat AS Monaco 2-1 Tripadvisor. Between 2020 and 2023, the first expansion took place increasing capacity from 45,000 to 65,000 seats by extending stands on the curves, and in February 2023 the stadium hosted four matches including the third-place game of the Club World Cup Lepietri. In summer 2023, the next phase of expansion began: the athletics track was removed, stands were increased by an additional 10,000 seats making it the largest in the country at 75,000 capacity, the facade was completed, and a new roof was added over the stands, transforming it into a high-standard football-specific arena Lepietri. The \"new\" Grand Stade de Tanger was inaugurated on November 14, 2025, with a friendly match between Morocco and Mozambique (1-0) Lepietri. Located in a sports complex integrating a tennis club, Olympic swimming pool, semi-Olympic pool, multi-sports hall, futsal hall, and bowling alley, the stadium is 10 minutes from downtown and close to the airport and railway station HotelsCombined. Currently with 72,644 places, capacity will reach 75,600 by 2030, featuring 142 VIP/VVIP skyboxes, 3 VIP salons, 1 VVIP salon, and 103 food and beverage points HotelsCombined. The stadium will host prestigious matches for both AFCON 2025 and the 2030 FIFA World Cup, possibly including a semi-final.",
+      description: "Named after Ibn Battuta, the famous 14th-century traveler, this stadium is located southwest of Tangier in northern Morocco and cost 844 million dirhams (80 million euros) Lepietri. The inaugural match was played on April 26, 2011, between IR Tanger and Atlético Madrid B, followed by a match between Raja CA and Atlético Madrid Tripadvisor. On July 27, 2011, the stadium hosted the 2011 Trophée des Champions where Marseille beat Lille 5-4, and it hosted the trophy again on July 29, 2017, when Paris Saint-Germain beat AS Monaco 2-1 Tripadvisor. Between 2020 and 2023, the first expansion took place increasing capacity from 45,000 to 65,000 seats by extending stands on the curves, and in February 2023 the stadium hosted four matches including the third-place game of the Club World Cup Lepietri. In summer 2023, the next phase of expansion began: the athletics track was removed, stands were increased by an additional 10,000 seats making it the largest in the country at 75,000 capacity, the facade was completed, and a new roof was added over the stands, transforming it into a high-standard football-specific arena Lepietri. The \"new\" Grand Stade de Tanger was inaugurated on November 14, 2025, with a friendly match between Morocco and Mozambique (1-0) Lepietri. Located in a sports complex integrating a tennis club, Olympic swimming pool, semi-Olympic pool, multi-sports hall, futsal hall, and bowling alley, the stadium is 10 minutes from downtown and close to the airport and railway station HotelsCombined. Currently with 72,644 places, capacity will reach 75,600 by 2030, featuring 142 VIP/VVVIP skyboxes, 3 VIP salons, 1 VVVIP salon, and 103 food and beverage points HotelsCombined. The stadium will host prestigious matches for both AFCON 2025 and the 2030 FIFA World Cup, possibly including a semi-final.",
       imagePlaceholder: "bg-gradient-to-br from-secondary to-gold",
       imageUrl: "https://sport.le360.ma/resizer/v2/Z2WTISO555GRTARZBJ2O3YR7LE.JPG?auth=0f582b6063f8b5ed4537897c89db9e813f1a3cbfed93e2224c109d59587d73d3&smart=true&width=1216&height=684",
       googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Grand+Stade+Ibn+Batouta+Tanger",
@@ -211,7 +211,6 @@ const citiesAndStadiums: CityData[] = [
 const CityStadiumsPage = () => {
   const { cityName } = useParams<{ cityName: string }>();
   const navigate = useNavigate();
-
   const cityData = citiesAndStadiums.find(city => city.name === cityName);
 
   if (!cityData) {
@@ -236,6 +235,7 @@ const CityStadiumsPage = () => {
         <Button onClick={() => navigate("/dashboard")} variant="outline" className="mb-8">
           &larr; Back to Dashboard
         </Button>
+
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             <span className="bg-gradient-primary bg-clip-text text-transparent">{cityData.name} Stadiums</span>
@@ -247,42 +247,48 @@ const CityStadiumsPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {cityData.stadiums.map((stadium, index) => (
-            <Card
-              key={stadium.name}
+            <Card 
+              key={stadium.name} 
               className="group relative overflow-hidden rounded-3xl bg-card/30 backdrop-blur-lg border-2 border-border hover:border-primary transition-all hover:scale-105 hover:shadow-glow animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className={cn("h-48 relative flex items-center justify-center overflow-hidden", stadium.imageUrl ? "" : stadium.imagePlaceholder)}>
                 {stadium.imageUrl ? (
-                  <img src={stadium.imageUrl} alt={stadium.name} className="absolute inset-0 w-full h-full object-cover" />
+                  <img 
+                    src={stadium.imageUrl} 
+                    alt={stadium.name} 
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                 ) : (
                   <CityIcon className="h-16 w-16 text-white/80 group-hover:scale-110 transition-transform" />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent"></div>
               </div>
-
               <div className="p-6">
                 <CardTitle className="text-2xl font-bold mb-3 flex items-center gap-2">
                   <Building className="h-6 w-6 text-primary" />
                   {stadium.name}
                 </CardTitle>
                 <CardDescription className="text-muted-foreground mb-4">
-                  {stadium.description.substring(0, 100)}... {/* Show a snippet of the description */}
+                  {stadium.description.substring(0, 100)}...
                 </CardDescription>
-
                 <div className="flex gap-4 mb-6">
                   <Button variant="outline" className="flex-1 rounded-full">
-                    <Eye className="mr-2 h-4 w-4" /> Galerie
+                    <Eye className="mr-2 h-4 w-4" />
+                    Galerie
                   </Button>
                   <Button variant="outline" className="flex-1 rounded-full">
-                    <Video className="mr-2 h-4 w-4" /> Vidéo
+                    <Video className="mr-2 h-4 w-4" />
+                    Vidéo
                   </Button>
                 </div>
-
-                <Button asChild className={cn(
-                  "w-full bg-gradient-to-r text-white rounded-full py-6 text-lg hover:opacity-90 transition-all hover:scale-105",
-                  cityData.gradient // Apply the city's gradient here
-                )}>
+                <Button 
+                  asChild 
+                  className={cn(
+                    "w-full bg-gradient-to-r text-white rounded-full py-6 text-lg hover:opacity-90 transition-all hover:scale-105",
+                    cityData.gradient
+                  )}
+                >
                   <Link to={`/stadiums/details/${encodeURIComponent(stadium.name)}`}>
                     Explore Stadium
                   </Link>
@@ -297,14 +303,15 @@ const CityStadiumsPage = () => {
             <Card className="bg-card/50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <HotelIcon className="h-6 w-6 text-primary" /> Recommended Hotels in {cityData.name}
+                  <HotelIcon className="h-6 w-6 text-primary" />
+                  Recommended Hotels in {cityData.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {cityData.hotels.map((hotel, index) => (
-                    <Link
-                      key={hotel.name}
+                    <Link 
+                      key={hotel.name} 
                       to={`/hotels/${encodeURIComponent(hotel.name)}`}
                       className={cn(
                         "group relative overflow-hidden rounded-3xl bg-card/30 backdrop-blur-lg border-2 border-border hover:border-primary transition-all hover:scale-105 hover:shadow-glow animate-fade-in",
