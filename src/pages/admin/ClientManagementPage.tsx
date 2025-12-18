@@ -18,26 +18,32 @@ const ClientManagementPage = () => {
   const navigate = useNavigate();
 
   const fetchClients = async () => {
-    // Join profiles with auth.users to get email
-    const { data, error } = await supabase
+    // Fetch profiles
+    const { data: profiles, error: profilesError } = await supabase
       .from("profiles")
-      .select(`
-        id,
-        first_name,
-        last_name,
-        role,
-        auth_users:auth.users(email)
-      `)
+      .select("id, first_name, last_name, role")
       .order("updated_at", { ascending: false });
 
-    if (error) throw error;
+    if (profilesError) throw profilesError;
 
-    return data.map((profile: any) => ({
-      id: profile.id,
-      first_name: profile.first_name,
-      last_name: profile.last_name,
-      role: profile.role,
-      email: profile.auth_users?.email || "N/A",
+    // Get user IDs
+    const userIds = profiles.map(profile => profile.id);
+
+    // Fetch user emails from auth.users
+    const { data: users, error: usersError } = await supabase
+      .from("users")
+      .select("id, email")
+      .in("id", userIds);
+
+    if (usersError) throw usersError;
+
+    // Create a map of user ID to email
+    const userEmailMap = new Map(users.map(user => [user.id, user.email]));
+
+    // Combine profile data with email
+    return profiles.map(profile => ({
+      ...profile,
+      email: userEmailMap.get(profile.id) || "N/A"
     }));
   };
 
