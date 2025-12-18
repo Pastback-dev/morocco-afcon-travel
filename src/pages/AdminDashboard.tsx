@@ -10,7 +10,8 @@ const AdminDashboard = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    navigate("/");
+    // Navigation will now be handled by the AdminLayout's useEffect,
+    // which will detect the session becoming null and redirect to /login.
   };
 
   return (

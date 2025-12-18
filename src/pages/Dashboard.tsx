@@ -45,7 +45,8 @@ const Dashboard = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    navigate("/");
+    // Navigation will now be handled by the AuthContext's onAuthStateChange listener
+    // which will set session to null, triggering the useEffect above to navigate to /login.
   };
 
   if (authLoading || !user) {
