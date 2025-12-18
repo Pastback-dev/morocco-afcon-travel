@@ -7,17 +7,21 @@ import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { session, isAdmin, loading } = useAuth(); // Get isAdmin and loading from useAuth
+  const { session, isAdmin, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && session) { // Ensure auth state is loaded and session exists
+    console.log("Login.tsx useEffect: loading:", loading, "session:", !!session, "isAdmin:", isAdmin);
+    if (!loading && session) {
+      console.log("Login.tsx useEffect: Session and not loading. Checking isAdmin...");
       if (isAdmin) {
+        console.log("Login.tsx useEffect: isAdmin is TRUE. Navigating to /admin");
         navigate("/admin");
       } else {
+        console.log("Login.tsx useEffect: isAdmin is FALSE. Navigating to /dashboard");
         navigate("/dashboard");
       }
     }
-  }, [session, isAdmin, loading, navigate]); // Add isAdmin and loading to dependencies
+  }, [session, isAdmin, loading, navigate]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
