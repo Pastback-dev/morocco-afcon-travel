@@ -6,20 +6,21 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth(); // Get signOut from useAuth
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    // Navigation will now be handled by the AdminLayout's useEffect,
-    // which will detect the session becoming null and redirect to /login.
-  };
+  // handleSignOut is now directly from AuthContext
+  // const handleSignOut = async () => {
+  //   await supabase.auth.signOut();
+  //   // Navigation will now be handled by the AdminLayout's useEffect,
+  //   // which will detect the session becoming null and redirect to /login.
+  // };
 
   return (
     <div className="min-h-screen bg-background text-foreground p-8">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">Admin Dashboard</h1>
-          <Button onClick={handleSignOut} variant="outline">
+          <Button onClick={signOut} variant="outline"> {/* Use signOut from context */}
             Sign Out
           </Button>
         </div>

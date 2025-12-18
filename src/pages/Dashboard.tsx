@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 import StadiumSelection from "@/components/StadiumSelection"; // Import the new component
 
 const Dashboard = () => {
-  const { user, session, loading: authLoading } = useAuth();
+  const { user, session, loading: authLoading, signOut } = useAuth(); // Get signOut from useAuth
   const navigate = useNavigate();
 
   const fetchUserPackages = async () => {
@@ -43,11 +43,12 @@ const Dashboard = () => {
     }
   }, [session, authLoading, navigate]);
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    // Navigation will now be handled by the AuthContext's onAuthStateChange listener
-    // which will set session to null, triggering the useEffect above to navigate to /login.
-  };
+  // handleSignOut is now directly from AuthContext
+  // const handleSignOut = async () => {
+  //   await supabase.auth.signOut();
+  //   // Navigation will now be handled by the AuthContext's onAuthStateChange listener
+  //   // which will set session to null, triggering the useEffect above to navigate to /login.
+  // };
 
   if (authLoading || !user) {
     return (
@@ -64,7 +65,7 @@ const Dashboard = () => {
       <div className="container mx-auto p-4 md:p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button onClick={handleSignOut} variant="outline">
+          <Button onClick={signOut} variant="outline"> {/* Use signOut from context */}
             Sign Out
           </Button>
         </div>

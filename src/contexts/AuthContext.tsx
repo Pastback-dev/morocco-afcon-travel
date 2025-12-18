@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 interface AuthContextType {
   session: Session | null;
   user: User | null;
   loading: boolean;
   isAdmin: boolean;
+  signOut: () => Promise<void>; // Add signOut to the context type
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -14,6 +16,7 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
   isAdmin: false,
+  signOut: async () => {}, // Default empty function
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -21,6 +24,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -78,11 +82,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/login"); // Explicitly navigate to login after sign out
+  };
+
   const value = {
     session,
     user,
     loading,
     isAdmin,
+    signOut: handleSignOut, // Provide the signOut function
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
