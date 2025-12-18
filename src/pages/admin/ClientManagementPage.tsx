@@ -18,9 +18,16 @@ const ClientManagementPage = () => {
   const navigate = useNavigate();
 
   const fetchClients = async () => {
+    // Join profiles with auth.users to get email
     const { data, error } = await supabase
       .from("profiles")
-      .select("id, first_name, last_name, role, auth_users(email)")
+      .select(`
+        id,
+        first_name,
+        last_name,
+        role,
+        auth_users:auth.users(email)
+      `)
       .order("updated_at", { ascending: false });
 
     if (error) throw error;

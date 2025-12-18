@@ -19,12 +19,14 @@ const RevenueReportsPage = () => {
   const navigate = useNavigate();
 
   const fetchRevenueData = async () => {
+    // Fetch user packages
     const { data: userPackagesData, error: userPackagesError } = await supabase
       .from("user_packages")
       .select("id, user_id, package_name, created_at");
 
     if (userPackagesError) throw userPackagesError;
 
+    // Fetch package prices
     const { data: packagesData, error: packagesError } = await supabase
       .from("packages")
       .select("title, price");
@@ -33,10 +35,16 @@ const RevenueReportsPage = () => {
 
     const packagePrices = new Map(packagesData.map(pkg => [pkg.title, pkg.price]));
 
+    // Get unique user IDs
     const userIds = [...new Set(userPackagesData.map(up => up.user_id))];
+    
+    // Fetch user emails by joining profiles with auth.users
     const { data: usersData, error: usersError } = await supabase
       .from("profiles")
-      .select("id, auth_users(email)")
+      .select(`
+        id,
+        auth_users:auth.users(email)
+      `)
       .in("id", userIds);
 
     if (usersError) throw usersError;
