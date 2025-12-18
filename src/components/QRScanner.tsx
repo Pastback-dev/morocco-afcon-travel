@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { QrReader } from "react-qr-reader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, QrCode } from "lucide-react";
+import { Loader2, QrCode, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface QRScannerProps {
@@ -13,8 +13,10 @@ interface QRScannerProps {
 const QRScanner = ({ onScanComplete }: QRScannerProps) => {
   const [scanning, setScanning] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleScan = async (result: string | null) => {
     if (result) {
@@ -61,11 +63,75 @@ const QRScanner = ({ onScanComplete }: QRScannerProps) => {
     setScanning(false);
   };
 
-  if (loading) {
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setImageUploading(true);
+    
+    try {
+      // Create a new FileReader to read the image
+      const reader = new FileReader();
+      
+      reader.onload = async (e) => {
+        const imageDataUrl = e.target?.result as string;
+        
+        // Create an image element to get dimensions
+        const img = new Image();
+        img.src = imageDataUrl;
+        
+        img.onload = async () => {
+          // Create a canvas to process the image
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          if (!ctx) {
+            throw new Error("Could not get canvas context");
+          }
+          
+          // Set canvas dimensions to match image
+          canvas.width = img.width;
+          canvas.height = img.height;
+          
+          // Draw image on canvas
+          ctx.drawImage(img, 0, 0);
+          
+          // Use QrReader to scan from canvas
+          try {
+            const qrReader = new QrReader();
+            const result = await qrReader.scan(canvas);
+            handleScan(result?.getText() || null);
+          } catch (error) {
+            toast({
+              title: "Scan Error",
+              description: "Could not read QR code from image. Please try another image.",
+              variant: "destructive",
+            });
+            setImageUploading(false);
+          }
+        };
+      };
+      
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast({
+        title: "Upload Error",
+        description: "Failed to process image. Please try again.",
+        variant: "destructive",
+      });
+      setImageUploading(false);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
+  if (loading || imageUploading) {
     return (
       <div className="flex flex-col items-center justify-center p-8">
         <Loader2 className="h-8 w-8 animate-spin mb-4" />
-        <p>Processing scan result...</p>
+        <p>{imageUploading ? "Processing image..." : "Processing scan result..."}</p>
       </div>
     );
   }
@@ -102,13 +168,33 @@ const QRScanner = ({ onScanComplete }: QRScannerProps) => {
             </Button>
           </div>
         ) : (
-          <Button 
-            onClick={() => setScanning(true)} 
-            className="w-full bg-gradient-primary hover:opacity-90 text-primary-foreground"
-          >
-            <QrCode className="mr-2 h-5 w-5" />
-            Start QR Scanner
-          </Button>
+          <div className="space-y-4">
+            <Button 
+              onClick={() => setScanning(true)} 
+              className="w-full bg-gradient-primary hover:opacity-90 text-primary-foreground"
+            >
+              <QrCode className="mr-2 h-5 w-5" />
+              Start Camera Scanner
+            </Button>
+            
+            <div className="relative">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                accept="image/*"
+                className="hidden"
+              />
+              <Button
+                onClick={triggerFileInput}
+                variant="outline"
+                className="w-full"
+              >
+                <Upload className="mr-2 h-5 w-5" />
+                Upload QR Code Image
+              </Button>
+            </div>
+          </div>
         )}
         <p className="text-sm text-muted-foreground text-center">
           Scan QR codes at stadiums to get information and nearby hotel recommendations
