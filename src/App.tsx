@@ -11,8 +11,9 @@ import Payment from "./pages/Payment";
 import CityStadiumsPage from "./pages/CityStadiumsPage";
 import HotelDetailsPage from "./pages/HotelDetailsPage";
 import StadiumDetailsPage from "./pages/StadiumDetailsPage";
-import AdminDashboard from "./pages/AdminDashboard"; // Import AdminDashboard
-import AdminLayout from "./components/AdminLayout"; // Import AdminLayout
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLayout from "./components/AdminLayout";
+import AdminConnectLogin from "./pages/AdminConnectLogin"; // Import AdminConnectLogin
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/adminconnect" element={<AdminConnectLogin />} /> {/* New Admin Connect Login Route */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/stadiums/:cityName" element={<CityStadiumsPage />} />

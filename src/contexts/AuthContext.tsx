@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Fetch initial session and profile
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log("AuthContext: Initial getSession call. Session:", session);
+      console.log("AuthContext: Initial getSession call. Session: ", session);
       setSession(session);
       setUser(session?.user ?? null);
 
@@ -98,6 +98,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const handleSignOut = async () => {
     console.log("AuthContext: Signing out...");
     await supabase.auth.signOut();
+    localStorage.removeItem("admin_connected"); // Clear hardcoded admin flag
     console.log("AuthContext: Signed out, navigating to /login.");
     navigate("/login"); // Explicitly navigate to login after sign out
   };
