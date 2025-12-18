@@ -29,16 +29,13 @@ const ClientManagementPage = () => {
     // Get user IDs
     const userIds = profiles.map(profile => profile.id);
 
-    // Fetch user emails from auth.users
-    const { data: users, error: usersError } = await supabase
-      .from("users")
-      .select("id, email")
-      .in("id", userIds);
+    // Fetch user emails from auth.users using RPC or raw SQL since direct access might be restricted
+    const { data: users, error: usersError } = await supabase.rpc('get_users_email_by_ids', { user_ids: userIds });
 
     if (usersError) throw usersError;
 
     // Create a map of user ID to email
-    const userEmailMap = new Map(users.map(user => [user.id, user.email]));
+    const userEmailMap = new Map(users.map((user: any) => [user.id, user.email]));
 
     // Combine profile data with email
     return profiles.map(profile => ({
