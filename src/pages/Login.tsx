@@ -7,13 +7,17 @@ import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const { session, isAdmin, loading } = useAuth(); // Get isAdmin and loading from useAuth
 
   useEffect(() => {
-    if (session) {
-      navigate("/dashboard");
+    if (!loading && session) { // Ensure auth state is loaded and session exists
+      if (isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     }
-  }, [session, navigate]);
+  }, [session, isAdmin, loading, navigate]); // Add isAdmin and loading to dependencies
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
