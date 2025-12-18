@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X, Plane } from "lucide-react";
+import { Menu, X, Plane, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
 
   const menuItems = [
     { label: "Home", href: "/#home" },
@@ -21,9 +21,18 @@ const Navigation = () => {
     if (loading) return null;
     if (user) {
       return (
-        <Button asChild className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6">
-          <Link to="/dashboard">Dashboard</Link>
-        </Button>
+        <>
+          {isAdmin && (
+            <Button asChild variant="ghost" className="text-primary hover:bg-primary/10 rounded-full px-4">
+              <Link to="/admin">
+                <ShieldCheck className="mr-2 h-5 w-5" /> Admin
+              </Link>
+            </Button>
+          )}
+          <Button asChild className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6">
+            <Link to="/dashboard">Dashboard</Link>
+          </Button>
+        </>
       );
     }
     return (
@@ -54,9 +63,6 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
-          </div>
-
-          <div className="hidden md:block">
             <AuthButton />
           </div>
 
@@ -81,7 +87,18 @@ const Navigation = () => {
                   {item.label}
                 </a>
               ))}
-              <AuthButton />
+              {isAdmin && (
+                <Button asChild variant="ghost" className="text-primary hover:bg-primary/10 rounded-full px-4">
+                  <Link to="/admin" onClick={() => setIsOpen(false)}>
+                    <ShieldCheck className="mr-2 h-5 w-5" /> Admin
+                  </Link>
+                </Button>
+              )}
+              <Button asChild className="bg-gradient-primary hover:opacity-90 text-primary-foreground rounded-full px-6">
+                <Link to={user ? "/dashboard" : "/login"} onClick={() => setIsOpen(false)}>
+                  {user ? "Dashboard" : "Login"}
+                </Link>
+              </Button>
             </div>
           </div>
         )}

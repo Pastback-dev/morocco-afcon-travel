@@ -10,7 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import Payment from "./pages/Payment";
 import CityStadiumsPage from "./pages/CityStadiumsPage";
 import HotelDetailsPage from "./pages/HotelDetailsPage";
-import StadiumDetailsPage from "./pages/StadiumDetailsPage"; // Import the new page
+import StadiumDetailsPage from "./pages/StadiumDetailsPage";
+import AdminDashboard from "./pages/AdminDashboard"; // Import AdminDashboard
+import AdminLayout from "./components/AdminLayout"; // Import AdminLayout
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -29,7 +31,14 @@ const App = () => (
             <Route path="/payment" element={<Payment />} />
             <Route path="/stadiums/:cityName" element={<CityStadiumsPage />} />
             <Route path="/hotels/:hotelName" element={<HotelDetailsPage />} />
-            <Route path="/stadiums/details/:stadiumName" element={<StadiumDetailsPage />} /> {/* New route */}
+            <Route path="/stadiums/details/:stadiumName" element={<StadiumDetailsPage />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              {/* Add more admin-specific routes here */}
+            </Route>
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
