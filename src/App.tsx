@@ -13,7 +13,11 @@ import HotelDetailsPage from "./pages/HotelDetailsPage";
 import StadiumDetailsPage from "./pages/StadiumDetailsPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLayout from "./components/AdminLayout";
-import AdminConnectLogin from "./pages/AdminConnectLogin"; // Import AdminConnectLogin
+import AdminConnectLogin from "./pages/AdminConnectLogin";
+import ClientManagementPage from "./pages/admin/ClientManagementPage";
+import RevenueReportsPage from "./pages/admin/RevenueReportsPage";
+import PackageManagementPage from "./pages/admin/PackageManagementPage";
+import PackageFormPage from "./pages/admin/PackageFormPage";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -28,7 +32,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/adminconnect" element={<AdminConnectLogin />} /> {/* New Admin Connect Login Route */}
+            <Route path="/adminconnect" element={<AdminConnectLogin />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/stadiums/:cityName" element={<CityStadiumsPage />} />
@@ -38,7 +42,11 @@ const App = () => (
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
-              {/* Add more admin-specific routes here */}
+              <Route path="clients" element={<ClientManagementPage />} />
+              <Route path="revenues" element={<RevenueReportsPage />} />
+              <Route path="packages" element={<PackageManagementPage />} />
+              <Route path="packages/new" element={<PackageFormPage />} />
+              <Route path="packages/edit/:packageId" element={<PackageFormPage />} />
             </Route>
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

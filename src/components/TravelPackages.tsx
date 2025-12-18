@@ -1,98 +1,66 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Star, Sparkles, Trophy, Crown } from "lucide-react";
+import { Check, Star, Sparkles, Trophy, Crown, LucideIcon } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Loader2 } from "lucide-react";
 
-const packages = [
-  {
-    title: "Fan Experience",
-    icon: Trophy,
-    price: "1,499",
-    description: "Perfect for passionate football fans",
-    features: [
-      "3 Group Stage Match Tickets",
-      "4-Star Hotel Accommodation (7 nights)",
-      "Round-trip Airport Transfers",
-      "Welcome Kit & Fan Merchandise",
-      "City Tour in Casablanca",
-      "24/7 Customer Support",
-    ],
-    gradient: "from-primary to-secondary",
-    popular: false,
-  },
-  {
-    title: "Standard Package",
-    icon: Star,
-    price: "2,899",
-    description: "Complete tournament experience",
-    features: [
-      "5 Match Tickets (Group + Knockout)",
-      "5-Star Hotel Accommodation (12 nights)",
-      "Return Flights Included",
-      "All Airport & Stadium Transfers",
-      "Guided Tours (Marrakech & Rabat)",
-      "Welcome Dinner & Cultural Evening",
-      "Dedicated Tour Manager",
-      "Travel Insurance",
-    ],
-    gradient: "from-secondary to-accent",
-    popular: true,
-  },
-  {
-    title: "VIP Premium",
-    icon: Crown,
-    price: "5,999",
-    description: "Luxury all-inclusive experience",
-    features: [
-      "VIP Match Tickets (All Knockout Stages)",
-      "Luxury 5-Star Hotel & Riads",
-      "Business Class Flights",
-      "Private Chauffeur Service",
-      "Exclusive Stadium Lounge Access",
-      "3-Day Sahara Desert Experience",
-      "Atlas Mountains Trek",
-      "Private Guided Tours All Cities",
-      "Meet & Greet with Legends",
-      "Premium Concierge Service",
-    ],
-    gradient: "from-moroccanRed to-gold",
-    popular: false,
-  },
-  {
-    title: "All-Inclusive",
-    icon: Sparkles,
-    price: "8,499",
-    description: "Ultimate premium experience",
-    features: [
-      "VIP Hospitality Tickets (All Matches)",
-      "Presidential Suite Accommodation",
-      "First Class Flights & Private Jet Options",
-      "Personal Butler & Tour Guide",
-      "Behind-the-Scenes Stadium Tours",
-      "Week-long Moroccan Cultural Journey",
-      "Michelin-Star Dining Experiences",
-      "Spa & Wellness Treatments",
-      "Helicopter Tours",
-      "Exclusive Event Access",
-      "Customizable Itinerary",
-    ],
-    gradient: "from-accent via-primary to-secondary",
-    popular: false,
-  },
-];
+interface Package {
+  id: string;
+  title: string;
+  icon: string;
+  price: number;
+  description: string;
+  features: string[];
+  gradient: string;
+  popular: boolean;
+}
+
+const iconMap: { [key: string]: LucideIcon } = {
+  Trophy: Trophy,
+  Star: Star,
+  Crown: Crown,
+  Sparkles: Sparkles,
+};
 
 const TravelPackages = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleBookNow = (packageName: string, price: string) => {
+  const { data: packages, isLoading, isError, error } = useQuery<Package[], Error>({
+    queryKey: ["packages"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("packages").select("*").order("price", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const handleBookNow = (packageName: string, price: number) => {
     if (!user) {
       navigate("/login");
       return;
     }
     navigate(`/payment?package=${encodeURIComponent(packageName)}&price=${price}`);
   };
+
+  if (isLoading) {
+    return (
+      <section className="py-24 px-4 bg-background flex justify-center items-center min-h-[50vh]">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section className="py-24 px-4 bg-background text-center text-destructive">
+        <p>Error loading packages: {error?.message}</p>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 px-4 bg-background relative overflow-hidden">
@@ -112,11 +80,11 @@ const TravelPackages = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {packages.map((pkg, index) => {
-            const Icon = pkg.icon;
+          {packages?.map((pkg, index) => {
+            const Icon = iconMap[pkg.icon] || Trophy;
             return (
               <Card
-                key={pkg.title}
+                key={pkg.id}
                 className={`relative p-8 bg-card/50 backdrop-blur-lg border-2 ${
                   pkg.popular ? "border-primary shadow-glow scale-105" : "border-border"
                 } rounded-3xl overflow-hidden transition-all hover:scale-105 hover:shadow-elegant animate-fade-in`}
